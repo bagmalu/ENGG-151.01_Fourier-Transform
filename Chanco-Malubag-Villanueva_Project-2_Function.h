@@ -20,9 +20,6 @@ void computeDFT(
     double ** realPart, double ** imagPart,
     double ** magnitude, double ** phase);
 
-//double * importData (string filename, int &duration, int &index);
+double * importData (string filename, int &duration);
 
 #endif // FUNCTION_H
-
-
-

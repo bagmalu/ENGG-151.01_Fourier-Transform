@@ -1,3 +1,4 @@
+
 // Chanco, Malubag, Villanueva
 // 3 BS Computer Engineering
 
@@ -28,91 +29,82 @@ void computeDFT(
 
 
 
-// double * importData (string filename, int &duration, int &index)
-// {
-//   ifstream f(filename);
+ double * importData (string filename, int &duration)
+ {
+   ifstream f(filename);
 
-//   if(f.good())
-//   {
-//     string line;
-//     stringstream s;
+   if(f.good())
+   {
+     string line;
+     stringstream s;
 
-//     vector<double> v;
+     vector<double> v;
 
-//     double number;
-//     double * signal;
+     double number;
+     double * signal;
 
-//     bool firstLine = true;
+     bool firstLine = true;
 
-//     duration = 0;
-//     index = 0;
+     duration = 0;
+     int index = 0; //should always ignore and assume to be 0
 
-//     cout << "\n" << filename << " accessed!\n";
+     cout << "\n" << filename << " accessed!\n";
 
-//     while(getline(f,line))
-//     {
-//       s << line;
+     while(getline(f,line))
+     {
+       s << line;
 
-//       if(firstLine)
-//       {
-//         duration++;
-//         s >> index;
+       if(firstLine)
+       {
+         duration++;
+         s >> index;
+       }
+       else //if not first line
+       {
+         duration++;
 
-//         while(s >> number)
-//         {
-//           v.push_back(number);
-//         }
-//       }
-//       else //if not first line
-//       {
-//         duration++;
+         while(s >> number)
+         {
+           v.push_back(number);
+         }
 
-//         while(s >> number)
-//         {
-//           v.push_back(number);
-//         }
+         s.clear();
+       }
 
-//         s.clear();
-//       }
+       //reset all
+       s.clear();
+       number = 0;
+       line.clear();
+       firstLine = false;
+     }
 
-//       //reset all
-//       s.clear();
-//       number = 0;
-//       line.clear();
-//       firstLine = false;
-//     }
+     //putting into array
+     if(v.size() !=0)
+     {
+       int j = 0;
 
-//     //putting into array
-//     if(v.size() !=0)
-//     {
-//       int j = 0;
+       signal = new double [duration];
 
-//       signal = new double [duration];
+       for(int i=0; i<duration; i++)
+       {
+         signal[i] = v[j];
+         j++;
+       }
 
-//       for(int i=0; i<duration; i++)
-//       {
-//         signal[i] = v[j];
-//         j++;
-//       }
-
-//       //console feedback
-//       cout << "\n" << filename << " successfully read!\n";
-//       cout << "Duration: " << duration << endl;
+       //console feedback
+       cout << "\n" << filename << " successfully read!\n";
+       cout << "Duration: " << duration << endl;
 //       cout << "Index: " << index << endl;
 
-//       return signal;
-//     }
-//     else
-//     {
-//       cout << "\n" << filename << " is empty" << endl;
-//       return NULL;
-//     }
-//     cout << "\n" << filename << " is empty!\n";
-//   }
-//   cout << "\n" << filename << " not accessible" << endl;
-//   return NULL;
-// }
-
-
-
-
+       return signal;
+     }
+     else
+     {
+       cout << "\n" << filename << " is empty" << endl;
+       return NULL;
+     }
+     cout << "\n" << filename << " is empty!\n";
+   }
+   cout << "\n" << filename << " not accessible" << endl;
+   return NULL;
+ }
