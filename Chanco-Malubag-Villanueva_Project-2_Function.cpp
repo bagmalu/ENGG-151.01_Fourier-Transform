@@ -22,14 +22,12 @@ void computeDFT(
     double ** realPart, double ** imagPart,
     double ** magnitude, double ** phase)
 {
-
+  
 }
 // The magnitude and phase could be computed separately from the
 // real and imaginary parts produced by the function
 
-
-
- double * importData (string filename, int &duration)
+double * importData (string filename, int &duration)
  {
    ifstream f(filename);
 
@@ -92,9 +90,7 @@ void computeDFT(
        }
 
        //console feedback
-       cout << "\n" << filename << " successfully read!\n";
-       cout << "Duration: " << duration << endl;
-//       cout << "Index: " << index << endl;
+       cout << "\nSignal duration " << duration << " extracted from " << filename << endl;
 
        return signal;
      }

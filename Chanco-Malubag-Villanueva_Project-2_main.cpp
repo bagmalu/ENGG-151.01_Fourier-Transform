@@ -38,28 +38,21 @@ int main(int argc, char *argv[])
     string output = (argc == 7) ? argv[6] : "dftlog.txt";
     cout << "\nOutput will be uploaded to: " << output << endl;
 
-    int duration = 0;
+    int l_points = 0; //duration
 
-    double * data = importData(signal_file, duration);
+    double * data = importData(signal_file, l_points);
 
+    double * digital_freq = new double[nSteps];
+    double changeinfreq = (end_freq-start_freq)/(nSteps-1);
+    
+    for(int i=0; i<=nSteps-1; i++)
+    {
+      digital_freq[i] = 2*PI()*((start_freq+(i*changeinfreq))/sampling_rate);
+    }
+    
+//    //for testing
 //    for(int i=0; i<=duration-1; i++)
 //      cout << data[i] << endl;
-
-    // //input files
-    // string xfile = argv[1];
-    // string yfile = argv[2];
-
-    // //x data variables
-    // int xDuration = 0;
-    // int xIndex = 0;
-
-    // //y data variables
-    // int yDuration = 0;
-    // int yIndex = 0;
-
-    // //importing data from files
-    // double * xData = importData(xfile, xDuration, xIndex);
-    // double * yData = importData(yfile, yDuration, yIndex);
 
     // //solving for output index
     // int xcorrIndex = xIndex - (yIndex + yDuration - 1);
