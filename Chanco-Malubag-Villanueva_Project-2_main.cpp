@@ -6,11 +6,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector>
+#include <vector> 
 #include <sstream>
 #include <cmath>
 
-#include "Chanco, Malubag, Villanueva_Project 2_Function.h"
+#include "Chanco-Malubag-Villanueva_Project-2_Function.h"
 
 using namespace std;
 
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     
     for(int i=0; i<=nSteps-1; i++)
     {
-      digital_freq[i] = 2*PI()*((start_freq+(i*changeinfreq))/sampling_rate);
+      digital_freq[i] = 2*M_PI*((start_freq+(i*changeinfreq))/sampling_rate);
     }
     
 //    //for testing

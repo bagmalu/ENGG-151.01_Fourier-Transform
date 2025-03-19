@@ -11,7 +11,7 @@
 #include <sstream>
 #include <cmath>
 
-#include "Chanco, Malubag, Villanueva_Project 2_Function.h"
+#include "Chanco-Malubag-Villanueva_Project-2_Function.h"
 
 using namespace std;
 
