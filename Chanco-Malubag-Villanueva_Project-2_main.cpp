@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     for(int i=0; i<=nSteps-1; i++)
     {
       digital_freq[i] = 2*M_PI*((start_freq+(i*changeinfreq))/sampling_rate);
+      cout << digital_freq[i] << endl;
     }
     
 //    //for testing
