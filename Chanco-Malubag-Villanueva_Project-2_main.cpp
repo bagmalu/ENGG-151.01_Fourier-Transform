@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
     // cout << "nSteps: " << nSteps << endl;
     // cout << "changeinfreq: " << changeinfreq << "\n\n";
     
+    //yanners palipat sa function
     for(int i=0; i<=nSteps-1; i++)
     {
       double changeinfreq = ((end_freq-start_freq)/(nSteps-1));
