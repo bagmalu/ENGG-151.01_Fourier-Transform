@@ -49,11 +49,13 @@ int main(int argc, char *argv[])
 
     double * digital_freq = new double[nSteps];
     double changeinfreq = (end_freq-start_freq)/(nSteps-1);
+
+    cout << "changeinfreq: " << changeinfreq << endl;
     
     for(int i=0; i<=nSteps-1; i++)
     {
       digital_freq[i] = 2*M_PI*((start_freq+(i*changeinfreq))/sampling_rate);
-      cout << digital_freq[i] << endl;
+      cout << "\n" << digital_freq[i] << endl;
     }
     
 //    //for testing
