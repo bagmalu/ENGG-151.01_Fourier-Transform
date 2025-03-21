@@ -57,53 +57,25 @@ int main(int argc, char *argv[])
 
     double * data = importData(signal_file, l_points);
 
-    double * signal = new double[nSteps];
-    double * magnitudes = new double[nSteps];
-    double * frequencies = new double[nSteps];
+    // double * signal = new double[nSteps]; --> ion remember where we used this
 
+    double * real_part = new double[nSteps];
+    double * imag_part = new double[nSteps];
+    double * magnitude = new double[nSteps];
+    double * phase = new double[nSteps];
+
+    // //for checking lang
     // cout << "\nsampling rate: " << sampling_rate << endl;
     // cout << "start_freq: " << start_freq << endl;
     // cout << "end_freq: " << end_freq << endl;
     // cout << "nSteps: " << nSteps << endl;
     // cout << "changeinfreq: " << changeinfreq << "\n\n";
     
-    //yanners palipat sa function
-    for(int i=0; i<=nSteps-1; i++)
-    {
-      double changeinfreq = ((end_freq-start_freq)/(nSteps-1));
-      double digital_freq = 2*M_PI*((start_freq + i * changeinfreq)/sampling_rate);
-
-      double real_part = 0.0;
-      double imag_part = 0.0;
-
-      for(int n = 0; n < nSteps; n++)
-      {
-        real_part += signal[n] * cos(digital_freq * n);
-        imag_part += signal[n] * sin(digital_freq * n);
-      }
-
-      magnitudes[i] = sqrt(real_part * real_part + imag_part * imag_part);
-      frequencies[i] = digital_freq;
-    }
+    computeDFT(data, l_points,
+               sampling_rate, start_freq, end_freq, nSteps,
+               real_part, imag_part,
+               magnitude, phase);
     
-//    //for testing
-//    for(int i=0; i<=duration-1; i++)
-//      cout << data[i] << endl;
-
-    // //solving for output index
-    // int xcorrIndex = xIndex - (yIndex + yDuration - 1);
-
-    // //output data variables
-    // int xcorrDuration = 0;
-
-    // double * xcorrData = new double [xcorrDuration];
-
-    // //computing for output
-    // computeNormalizedCrosscorrelation(
-    //   xData, xDuration, xIndex,
-    //   yData, yDuration, yIndex,
-    //   xcorrData, xcorrDuration, xcorrIndex);
-
     //exporting to output file
     ofstream outputfile;
     outputfile.open(output);

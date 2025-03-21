@@ -17,8 +17,8 @@ using namespace std;
 void computeDFT(
     double * xData, int xDuration,
     double samplingFreq, double startFreq, double endFreq, int nSteps,
-    double ** realPart, double ** imagPart,
-    double ** magnitude, double ** phase);
+    double * realPart, double * imagPart, //og was double ** for both
+    double * magnitude, double * phase); //og was double ** for both
 
 double * importData (string filename, int &duration);
 
