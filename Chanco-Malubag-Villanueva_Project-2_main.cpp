@@ -57,19 +57,32 @@ int main(int argc, char *argv[])
 
     double * data = importData(signal_file, l_points);
 
-    double * digital_freq = new double[nSteps];
-    double changeinfreq = ((end_freq-start_freq)/(nSteps-1));
+    double * signal = new double[nSteps];
+    double * magnitudes = new double[nSteps];
+    double * frequencies = new double[nSteps];
 
-    cout << "\nsampling rate: " << sampling_rate << endl;
-    cout << "start_freq: " << start_freq << endl;
-    cout << "end_freq: " << end_freq << endl;
-    cout << "nSteps: " << nSteps << endl;
-    cout << "changeinfreq: " << changeinfreq << "\n\n";
+    // cout << "\nsampling rate: " << sampling_rate << endl;
+    // cout << "start_freq: " << start_freq << endl;
+    // cout << "end_freq: " << end_freq << endl;
+    // cout << "nSteps: " << nSteps << endl;
+    // cout << "changeinfreq: " << changeinfreq << "\n\n";
     
     for(int i=0; i<=nSteps-1; i++)
     {
-      digital_freq[i] = 2*M_PI*((start_freq+(i*changeinfreq))/sampling_rate);
-      cout << digital_freq[i] << endl;
+      double changeinfreq = ((end_freq-start_freq)/(nSteps-1));
+      double digital_freq = 2*M_PI*((start_freq + i * changeinfreq)/sampling_rate);
+
+      double real_part = 0.0;
+      double imag_part = 0.0;
+
+      for(int n = 0; n < nSteps; n++)
+      {
+        real_part += signal[n] * cos(digital_freq * n);
+        imag_part += signal[n] * sin(digital_freq * n);
+      }
+
+      magnitudes[i] = sqrt(real_part * real_part + imag_part * imag_part);
+      frequencies[i] = digital_freq;
     }
     
 //    //for testing
