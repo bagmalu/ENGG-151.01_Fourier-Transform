@@ -34,6 +34,11 @@ int main(int argc, char *argv[])
     long end_freq = strtol(argv[4], NULL, 10);
     long nSteps = strtol(argv[5], NULL, 10);
 
+    cout << "\nsampling rate: " << sampling_rate << endl;
+    cout << "start_freq: " << start_freq << endl;
+    cout << "end_freq: " << end_freq << endl;
+    cout << "nSteps: " << nSteps << endl;
+
     //output file
     string output = (argc == 7) ? argv[6] : "dftlog.txt";
     cout << "\nOutput will be uploaded to: " << output << endl;
