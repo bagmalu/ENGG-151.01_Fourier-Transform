@@ -29,16 +29,26 @@ int main(int argc, char *argv[])
     string signal_file = argv[1];
 
     //initialize values based on command prompt
-    long sampling_rate = strtol(argv[2], NULL, 10);
-    long start_freq = strtol(argv[3], NULL, 10);
-    long end_freq = strtol(argv[4], NULL, 10);
-    long nSteps = strtol(argv[5], NULL, 10);
-
-    cout << "\nsampling rate: " << sampling_rate << endl;
-    cout << "start_freq: " << start_freq << endl;
-    cout << "end_freq: " << end_freq << endl;
-    cout << "nSteps: " << nSteps << endl;
-
+    stringstream s;
+    
+    double sampling_rate = 0.0;
+    double start_freq = 0.0;
+    double end_freq = 0.0;
+    int nSteps = 0;
+    
+    s << argv[2];   
+    s >> sampling_rate;
+    s.clear();
+    s << argv[3];
+    s >> start_freq;
+    s.clear();
+    s << argv[4];
+    s >> end_freq;
+    s.clear();
+    s << argv[5];
+    s >> nSteps;
+    s.clear();
+    
     //output file
     string output = (argc == 7) ? argv[6] : "dftlog.txt";
     cout << "\nOutput will be uploaded to: " << output << endl;
@@ -48,14 +58,18 @@ int main(int argc, char *argv[])
     double * data = importData(signal_file, l_points);
 
     double * digital_freq = new double[nSteps];
-    double changeinfreq = (end_freq-start_freq)/(nSteps-1);
+    double changeinfreq = ((end_freq-start_freq)/(nSteps-1));
 
-    cout << "changeinfreq: " << changeinfreq << endl;
+    cout << "\nsampling rate: " << sampling_rate << endl;
+    cout << "start_freq: " << start_freq << endl;
+    cout << "end_freq: " << end_freq << endl;
+    cout << "nSteps: " << nSteps << endl;
+    cout << "changeinfreq: " << changeinfreq << "\n\n";
     
     for(int i=0; i<=nSteps-1; i++)
     {
       digital_freq[i] = 2*M_PI*((start_freq+(i*changeinfreq))/sampling_rate);
-      cout << "\n" << digital_freq[i] << endl;
+      cout << digital_freq[i] << endl;
     }
     
 //    //for testing
