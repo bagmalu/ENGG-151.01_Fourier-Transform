@@ -21,5 +21,13 @@ void computeDFT(
     double * magnitude, double * phase); //og was double ** for both
 
 double * importData (string filename, int &duration);
+void outputResult(string filename,
+                double* realPart,
+                double* imagPart,
+                double* magnitude,
+                double* phase,
+                int nSteps,
+                double startFreq,
+                double changeinfreq);
 
 #endif // FUNCTION_H
