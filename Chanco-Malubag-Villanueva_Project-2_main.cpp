@@ -30,13 +30,13 @@ int main(int argc, char *argv[])
 
     //initialize values based on command prompt
     stringstream s;
-    
+
     double sampling_rate = 0.0;
     double start_freq = 0.0;
     double end_freq = 0.0;
     int nSteps = 0;
-    
-    s << argv[2];   
+
+    s << argv[2];
     s >> sampling_rate;
     s.clear();
     s << argv[3];
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     s << argv[5];
     s >> nSteps;
     s.clear();
-    
+
     //output file
     string output = (argc == 7) ? argv[6] : "dftlog.txt";
     cout << "\nOutput will be uploaded to: " << output << endl;
@@ -64,42 +64,20 @@ int main(int argc, char *argv[])
     double * magnitude = new double[nSteps];
     double * phase = new double[nSteps];
 
-    // //for checking lang
-    // cout << "\nsampling rate: " << sampling_rate << endl;
-    // cout << "start_freq: " << start_freq << endl;
-    // cout << "end_freq: " << end_freq << endl;
-    // cout << "nSteps: " << nSteps << endl;
-    // cout << "changeinfreq: " << changeinfreq << "\n\n";
-    
+
     computeDFT(data, l_points,
                sampling_rate, start_freq, end_freq, nSteps,
                real_part, imag_part,
                magnitude, phase);
-    
+
+
+    // Calculate frequency step size
+    double changeinfreq = (end_freq - start_freq) / (nSteps - 1);
+
     //exporting to output file
-    ofstream outputfile;
-    outputfile.open(output);
-
-    // cout << "\nNormalized Crosscorrelation Output\n";
-
-    // if (xcorrDuration < 20)
-    // {
-    //   cout << xcorrIndex;
-    //   for (int i = 0; i<xcorrDuration; i++)
-    //   {
-    //     cout << "\t" << xcorrData[i] << endl;
-    //   }
-    // }
-
-
-    // outputfile << xcorrIndex;
-    // for (int i = 0; i < xcorrDuration; i++)
-    //   outputfile << "\t" << xcorrData[i] << endl;
-
+    outputResult(output.c_str(), real_part, imag_part, magnitude, phase, nSteps, start_freq, changeinfreq);
     cout << "\nOutput successfully written to: " << output << endl;
 
-    //close the file
-    outputfile.close();
   }
   return 0;
 }
