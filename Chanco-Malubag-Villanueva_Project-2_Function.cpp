@@ -17,28 +17,61 @@ using namespace std;
 
 //copy-pasted from specs
 void computeDFT(
-    double * xData, int xDuration,
+    double *xData, int xDuration,
     double samplingFreq, double startFreq, double endFreq, int nSteps,
-    double * realPart, double * imagPart, //og was double ** for both
-    double * magnitude, double * phase) //og was double ** for both
+    double *realPart, double *imagPart,
+    double *magnitude, double *phase)
 {
-  for(int i=0; i<=nSteps-1; i++)
-    {
-      double changeinfreq = ((endFreq-startFreq)/(nSteps-1));
-      double digital_freq = 2*M_PI*((startFreq + i * changeinfreq)/samplingFreq);
+    // Initialize real and imaginary parts to zero
+    for (int i = 0; i < nSteps; i++) {
+        realPart[i] = 0.0;
+        imagPart[i] = 0.0;
+    }
 
-      for(int n = 0; n < nSteps; n++)
-      {
-        realPart[i] += xData[n] * cos(digital_freq * n);
-        imagPart[i] += xData[n] * sin(digital_freq * n);
-      }
+    double changeinfreq = (endFreq - startFreq) / (nSteps - 1);
 
-      magnitude[i] = sqrt(realPart[i] * realPart[i] + imagPart[i] * imagPart[i]);
-      // frequencies[i] = digital_freq; --> change w formula to go back to phase
+    for (int k = 0; k < nSteps; k++) {
+        double digital_freq = 2 * M_PI * (startFreq + k * changeinfreq) / samplingFreq;
+
+        for (int n = 0; n < xDuration; n++) {
+            realPart[k] += xData[n] * cos(digital_freq * n);
+            imagPart[k] += xData[n] * sin(digital_freq * n);
+        }
+
+        magnitude[k] = sqrt(realPart[k] * realPart[k] + imagPart[k] * imagPart[k]);
+
+        // Computing phase in degrees
+        if (realPart[k] != 0 || imagPart[k] != 0) {
+            phase[k] = atan2(imagPart[k], realPart[k]) * (180.0 / M_PI); // Convert to degrees
+        } else {
+            phase[k] = 0.0;
+        }
     }
 }
-// The magnitude and phase could be computed separately from the
-// real and imaginary parts produced by the function
+
+// Function to output result
+void outputResult(string filename, double* realPart, double* imagPart, double* magnitude, double* phase, int nSteps, double startFreq, double changeinfreq) {
+    ofstream outfile(filename);
+    if (outfile.is_open()) {
+        // Output header for real and imaginary parts
+        outfile << "frequency (Hz) real part imaginary part" << endl;
+        for (int i = 0; i < nSteps; i++) {
+            double frequency = startFreq + i * changeinfreq; // Calculate frequency for each bin
+            outfile << frequency << " " << realPart[i] << " " << imagPart[i] << endl;
+        }
+
+        // Output header for magnitude and phase
+        outfile << "frequency (Hz) magnitude phase (degrees)" << endl;
+        for (int i = 0; i < nSteps; i++) {
+            double frequency = startFreq + i * changeinfreq; // Calculate frequency for each bin
+            outfile << frequency << " " << magnitude[i] << " " << phase[i] << endl;
+        }
+
+        outfile.close();
+    } else {
+        cerr << "Error opening file: " << filename << endl;
+    }
+}
 
 double * importData (string filename, int &duration)
  {
@@ -68,7 +101,7 @@ double * importData (string filename, int &duration)
        if(firstLine)
        {
          duration++;
-         s >> index; 
+         s >> index;
        }
        else //if not first line
        {
