@@ -6,11 +6,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <vector> 
+#include <vector>
 #include <sstream>
 #include <cmath>
 
-#include "Chanco-Malubag-Villanueva_Project-2_Function.h"
+#include "Function.h"
 
 using namespace std;
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 
     // Calculate frequency step size
-    double changeinfreq = (end_freq - start_freq) / (nSteps - 1);
+    double changeinfreq = (end_freq - start_freq) / (nSteps);
 
     //exporting to output file
     outputResult(output.c_str(), real_part, imag_part, magnitude, phase, nSteps, start_freq, changeinfreq);
