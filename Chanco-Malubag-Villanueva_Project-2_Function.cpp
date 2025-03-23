@@ -23,19 +23,19 @@ void computeDFT(
     double *magnitude, double *phase)
 {
     // Initialize real and imaginary parts to zero
-    for (int i = 0; i < nSteps; i++) {
+    for (int i = 0; i <= nSteps; i++) {
         realPart[i] = 0.0;
         imagPart[i] = 0.0;
     }
 
-    double changeinfreq = (endFreq - startFreq) / (nSteps - 1);
+    double changeinfreq = (endFreq - startFreq) / (nSteps);
 
-    for (int k = 0; k < nSteps; k++) {
+    for (int k = 0; k <= nSteps; k++) {
         double digital_freq = 2 * M_PI * (startFreq + k * changeinfreq) / samplingFreq;
 
         for (int n = 0; n < xDuration; n++) {
-            realPart[k] += xData[n] * cos(digital_freq * n);
-            imagPart[k] += xData[n] * sin(digital_freq * n);
+            realPart[k] += xData[n] * cos(digital_freq*n);
+            imagPart[k] -= xData[n] * sin(digital_freq*n);
         }
 
         magnitude[k] = sqrt(realPart[k] * realPart[k] + imagPart[k] * imagPart[k]);
@@ -55,14 +55,14 @@ void outputResult(string filename, double* realPart, double* imagPart, double* m
     if (outfile.is_open()) {
         // Output header for real and imaginary parts
         outfile << "frequency (Hz) real part imaginary part" << endl;
-        for (int i = 0; i < nSteps; i++) {
+        for (int i = 0; i <= nSteps; i++) {
             double frequency = startFreq + i * changeinfreq; // Calculate frequency for each bin
             outfile << frequency << " " << realPart[i] << " " << imagPart[i] << endl;
         }
 
         // Output header for magnitude and phase
         outfile << "frequency (Hz) magnitude phase (degrees)" << endl;
-        for (int i = 0; i < nSteps; i++) {
+        for (int i = 0; i <= nSteps; i++) {
             double frequency = startFreq + i * changeinfreq; // Calculate frequency for each bin
             outfile << frequency << " " << magnitude[i] << " " << phase[i] << endl;
         }
