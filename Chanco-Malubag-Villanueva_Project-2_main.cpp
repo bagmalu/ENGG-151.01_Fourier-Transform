@@ -18,8 +18,9 @@ int main(int argc, char *argv[])
 {
   if((argc < 6) || (argc > 7))
   {
-    cout << "\nInput format should be: " << argv[0]
-         << " <signal-file> <sampling-rate> <start-freq> <end-freq> <num of steps> <output-file>" << endl;
+    cout << "\nInput format should be: " << argv[0] << " <signal-file>" <<
+    "<sampling-rate> <start-freq> <end-freq>" <<
+         "<num of steps> <output-file>" << endl;
 
     cout << "\nProgram has been terminated" << endl;
   }
@@ -55,9 +56,7 @@ int main(int argc, char *argv[])
 
     int l_points = 0; //duration
 
-    double * data = importData(signal_file, l_points);
-
-    // double * signal = new double[nSteps]; --> ion remember where we used this
+    double * data = importData(signal_file, l_points);\
 
     double * real_part = new double[nSteps];
     double * imag_part = new double[nSteps];
@@ -75,7 +74,8 @@ int main(int argc, char *argv[])
     double changeinfreq = (end_freq - start_freq) / (nSteps);
 
     //exporting to output file
-    outputResult(output.c_str(), real_part, imag_part, magnitude, phase, nSteps, start_freq, changeinfreq);
+    outputResult(output.c_str(), real_part, imag_part, magnitude,
+                 phase, nSteps, start_freq, changeinfreq);
     cout << "\nOutput successfully written to: " << output << endl;
 
   }
