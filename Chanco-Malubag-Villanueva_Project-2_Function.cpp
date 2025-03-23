@@ -78,12 +78,20 @@ void outputResult(string filename,
                 << setw(16) << "real part"
                 << setw(16) << "imaginary part" << endl;
 
+        cout << endl << setw(16) << "frequency (Hz)"
+             << setw(16) << "real part"
+             << setw(16) << "imaginary part" << endl;
+
         for (int i = 0; i <= nSteps; i++)
         {
             double frequency = startFreq + i * changeinfreq;
             outfile << setw(16) << frequency
                     << setw(16) << realPart[i]
                     << setw(16) << imagPart[i] << endl;
+
+            cout << setw(16) << frequency
+                 << setw(16) << realPart[i]
+                 << setw(16) << imagPart[i] << endl;
         }
 
         // Output header for magnitude and phase
@@ -91,12 +99,20 @@ void outputResult(string filename,
                 << setw(16) << "magnitude"
                 << setw(16) << "phase (degrees)" << endl;
 
+        cout << "\n" << setw(16) << "frequency (Hz)"
+             << setw(16) << "magnitude"
+             << setw(16) << "phase (degrees)" << endl;
+
         for (int i = 0; i <= nSteps; i++)
         {
             double frequency = startFreq + i * changeinfreq;
             outfile << setw(16) << frequency
                     << setw(16) << magnitude[i]
                     << setw(16) << phase[i] << endl;
+
+            cout << setw(16) << frequency
+                 << setw(16) << magnitude[i]
+                 << setw(16) << phase[i] << endl;
         }
 
         outfile.close();
